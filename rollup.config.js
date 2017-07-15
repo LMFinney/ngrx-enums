@@ -7,7 +7,7 @@ const camelCase = require('lodash.camelcase')
 const libraryName = 'ngrx-enums'
 
 export default {
-  entry: `compiled/index.js`,
+  entry: `compiled/${libraryName}.js`,
   targets: [
 	  { dest: pkg.main, moduleName: camelCase(libraryName), format: 'umd' },
 	  { dest: pkg.module, format: 'es' }

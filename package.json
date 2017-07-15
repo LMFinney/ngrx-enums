@@ -1,14 +1,14 @@
 {
   "name": "ngrx-enums",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A small library that provides the base classes for for implementing @ngrx actions and reducers with ts-enums.",
   "keywords": [
     "typescript",
     "enum",
     "ngrx"
   ],
-  "main": "dist/index.umd.js",
-  "module": "dist/index.es5.js",
+  "main": "dist/ngrx-enums.umd.js",
+  "module": "dist/ngrx-enums.es5.js",
   "typings": "dist/types/ngrx-enums.d.ts",
   "files": [
     "dist"
@@ -76,13 +76,10 @@
     }
   },
   "dependencies": {
-    "@angular/common": "4.0.2",
-    "@angular/compiler": "4.0.2",
-    "@angular/core": "4.0.2",
+    "@angular/core": "^4.3.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.3",
-    "ts-enums": "0.0.3",
-    "zone.js": "^0.8.4"
+    "ts-enums": "0.0.4"
   },
   "devDependencies": {
     "@types/jest": "^20.0.0",
