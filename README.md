@@ -26,3 +26,9 @@ npm install ngrx-enums
 ## More information
 
 * The [test directory](test) contains examples.
+* Some users get an error that looks something like this when compiling:
+ 
+   ```ERROR in Error encountered resolving symbol values statically. Calling function 'ɵmakeDecorator', function calls are not supported. Consider replacing the function or lambda with a reference to an exported function, resolving symbol Injectable...```
+   
+   If you get this error, you might be able to fix the problem by adding a path of ```"@angular/*": ["../node_modules/@angular/*"]``` 
+   to your ```tsconfig.app.json``` file ([more information](https://github.com/angular/angular/issues/15767#issuecomment-308476202)).
