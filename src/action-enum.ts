@@ -5,8 +5,7 @@ import {Action} from '@ngrx/store';
  * A version of Action that uses generics to express the type of the payload.
  */
 export class TypedAction<T> implements Action {
-  constructor(public type: string, public payload?: T) {
-  }
+  constructor(public type: string, public payload?: T) {}
 }
 
 /**
@@ -18,7 +17,7 @@ export abstract class ActionEnumValue<T> extends EnumValue {
   }
 
   // Create the Action that contains the optional payload.
-  toAction<T>(payload?: T): TypedAction<T> {
+  toAction(payload?: T): TypedAction<T> {
     return new TypedAction(this.description, payload);
   }
 
@@ -34,7 +33,9 @@ export abstract class ActionEnumValue<T> extends EnumValue {
 /**
  * The abstract base for the action enum types.
  */
-export abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<V> {
+export abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<
+  V
+> {
   fromAction(action: TypedAction<any>): V | undefined {
     return this.byDescription(action.type);
   }

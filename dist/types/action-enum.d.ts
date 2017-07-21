@@ -13,7 +13,7 @@ export declare class TypedAction<T> implements Action {
  */
 export declare abstract class ActionEnumValue<T> extends EnumValue {
     constructor(_name: string);
-    toAction<T>(payload?: T): TypedAction<T>;
+    toAction(payload?: T): TypedAction<T>;
     readonly type: string;
     readonly fullName: string;
 }
