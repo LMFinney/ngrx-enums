@@ -934,6 +934,11 @@ img { max-width: 100%; }
 			<h2 id="more-information">More information</h2>
 			<ul>
 				<li>The <a href="test">test directory</a> contains examples.</li>
+				<li><p>Some users get an error that looks something like this when compiling:</p>
+					<p> <code>ERROR in Error encountered resolving symbol values statically. Calling function &#39;ɵmakeDecorator&#39;, function calls are not supported. Consider replacing the function or lambda with a reference to an exported function, resolving symbol Injectable...</code></p>
+					<p> If you get this error, you might be able to fix the problem by adding a path of <code>&quot;@angular/*&quot;: [&quot;../node_modules/@angular/*&quot;]</code>
+					to your <code>tsconfig.app.json</code> file (<a href="https://github.com/angular/angular/issues/15767#issuecomment-308476202">more information</a>).</p>
+				</li>
 			</ul>
 		</div>
 		<section class="tsd-panel-group tsd-index-group">

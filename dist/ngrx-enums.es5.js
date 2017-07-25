@@ -78,7 +78,7 @@ var Enum = (function () {
             throw new Error("Duplicate name: " + theEnum.name);
         }
         var enumValues = this.enumValuesFromObject(theEnum);
-        Object.freeze(enumValues);
+        Object.freeze(theEnum);
         Enum.enumValues.set(theEnum.name, enumValues);
     };
     /**
@@ -160,6 +160,14 @@ var Enum = (function () {
         enumerable: true,
         configurable: true
     });
+    /**
+     * Returns a simple representation of the type.
+     *
+     * @returns {string} a simple representation of the type
+     */
+    Enum.prototype.toString = function () {
+        return this.name;
+    };
     /**
      * Set up the enum and close the class.
      *

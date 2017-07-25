@@ -1,6 +1,6 @@
 {
   "name": "ngrx-enums",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A small library that provides the base classes for for implementing @ngrx actions and reducers with ts-enums.",
   "keywords": [
     "typescript",
@@ -23,7 +23,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "lint": "tslint -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "lint": "tslint -t codeFrame 'src/**/*.ts' --type-check --project tsconfig.json",
     "prebuild": "rimraf dist",
     "build": "tsc && rollup -c && rimraf compiled && typedoc --out dist/docs --target es6 --theme minimal src",
     "start": "tsc-watch --onSuccess \"rollup -c\"",
@@ -79,7 +79,7 @@
     "@angular/core": "^4.3.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.3",
-    "ts-enums": "0.0.4"
+    "ts-enums": "^0.0.5"
   },
   "devDependencies": {
     "@types/jest": "^20.0.0",
