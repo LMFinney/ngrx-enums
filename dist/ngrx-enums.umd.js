@@ -891,14 +891,14 @@ var ActionEnumValue = (function (_super) {
     /**
      * Get the payload from an action of this type.
      */
-    ActionEnumValue.prototype.fromAction = function (action) {
+    ActionEnumValue.prototype.toPayload = function (action) {
         return action.payload;
     };
     /**
      * Insert a map to payload operation into an observable chain
      */
     ActionEnumValue.prototype.map = function (observable) {
-        return observable.map(this.fromAction);
+        return observable.map(this.toPayload);
     };
     /**
      * Create an observable of the payload of actions of this type (for creating effects)

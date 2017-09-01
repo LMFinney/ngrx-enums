@@ -25,7 +25,7 @@ export declare abstract class ActionEnumValue<T> extends EnumValue {
     /**
      * Get the payload from an action of this type.
      */
-    fromAction(action: TypedAction<T>): T | undefined;
+    toPayload(action: TypedAction<T>): T | undefined;
     /**
      * Insert a map to payload operation into an observable chain
      */
