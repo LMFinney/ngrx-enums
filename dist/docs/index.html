@@ -931,9 +931,103 @@ img { max-width: 100%; }
 			<p>Install:</p>
 			<pre><code class="lang-text">npm install ngrx-enums
 </code></pre>
+			<h2 id="example">Example</h2>
+			<p>These examples are included in a <a href="test/reducer.test.ts">test</a>.</p>
+			<h3 id="actions-defined-via-enums">Actions Defined via Enums</h3>
+			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {ActionEnum, ActionEnumValue} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/action-enum'</span>;
+
+<span class="hljs-keyword">class</span> LayoutAction&lt;T&gt; <span class="hljs-keyword">extends</span> ActionEnumValue&lt;T&gt; {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span></span>) {
+    <span class="hljs-keyword">super</span>(name);
+  }
+}
+
+<span class="hljs-keyword">class</span> LayoutActionEnumType <span class="hljs-keyword">extends</span> ActionEnum&lt;LayoutAction&lt;<span class="hljs-built_in">any</span>&gt;&gt; {
+  OPEN_SIDENAV: LayoutAction&lt;<span class="hljs-built_in">void</span>&gt; =
+    <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-string">'[Layout] Open Sidenav'</span>);
+  OPEN_SIDENAV_ALSO: LayoutAction&lt;<span class="hljs-built_in">void</span>&gt; =
+    <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-string">'[Layout] Open Sidenav Also'</span>);
+  SET_SIDENAV: LayoutAction&lt;<span class="hljs-built_in">boolean</span>&gt; =
+    <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-string">'[Layout] Set Sidenav'</span>);
+
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">super</span>();
+    <span class="hljs-keyword">this</span>.initEnum(<span class="hljs-string">'layoutActions'</span>);
+  }
+}
+
+<span class="hljs-keyword">const</span> LayoutActionEnum: LayoutActionEnumType = <span class="hljs-keyword">new</span> LayoutActionEnumType();
+</code></pre>
+			<h3 id="reducer-defined-via-matches-methods">Reducer Defined via <code>matches()</code> Methods</h3>
+			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {TypedAction} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/action-enum'</span>;
+<span class="hljs-keyword">import</span> {simplePropertyReducer} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/reducer-enum'</span>;
+
+<span class="hljs-keyword">interface</span> State {
+  showSidenav: <span class="hljs-built_in">boolean</span>;
+}
+
+<span class="hljs-keyword">const</span> initialState: State = {
+  showSidenav: <span class="hljs-literal">false</span>
+};
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">layoutReducer</span>(<span class="hljs-params">state = initialState, action: TypedAction&lt;<span class="hljs-built_in">any</span>&gt;</span>): <span class="hljs-title">State</span> </span>{
+  <span class="hljs-keyword">if</span> (LayoutActionEnum.matches(action,
+      LayoutActionEnum.OPEN_SIDENAV, LayoutActionEnum.OPEN_SIDENAV_ALSO)) {
+    <span class="hljs-comment">// a simple reducer that always sets the same value</span>
+    <span class="hljs-comment">// this shows how to respond to multiple actions</span>
+    <span class="hljs-comment">// (fall-through in switch)</span>
+    <span class="hljs-keyword">return</span> {...state, showSidenav: <span class="hljs-literal">true</span>};
+  } <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (LayoutActionEnum.SET_SIDENAV.matches(action)) {
+    <span class="hljs-comment">// a reducer that accepts a value and copies it as a property into state</span>
+    <span class="hljs-keyword">return</span> simplePropertyReducer&lt;State, <span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-string">'showSidenav'</span>)(state, action);
+  } <span class="hljs-keyword">else</span> {
+    <span class="hljs-keyword">return</span> state;
+  }
+}
+</code></pre>
+			<h3 id="reducer-defined-via-enums">Reducer Defined via Enums</h3>
+			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {ActionEnumValue} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/action-enum'</span>;
+<span class="hljs-keyword">import</span> {ReducerEnum, ReducerEnumValue, ReducerFunction, simplePropertyReducer} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/reducer-enum'</span>;
+
+<span class="hljs-keyword">interface</span> State {
+  showSidenav: <span class="hljs-built_in">boolean</span>;
+}
+
+<span class="hljs-keyword">const</span> initialState: State = {
+  showSidenav: <span class="hljs-literal">false</span>
+};
+
+<span class="hljs-keyword">class</span> LayoutReducer&lt;T&gt; <span class="hljs-keyword">extends</span> ReducerEnumValue&lt;State, T&gt; {
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params">action: ActionEnumValue&lt;T&gt; | ActionEnumValue&lt;T&gt;[],
+              reduce: ReducerFunction&lt;State, T&gt;</span>) {
+    <span class="hljs-keyword">super</span>(action, reduce);
+  }
+}
+
+<span class="hljs-keyword">class</span> LayoutReducerEnumType <span class="hljs-keyword">extends</span> ReducerEnum&lt;LayoutReducer&lt;<span class="hljs-built_in">any</span>&gt;, State&gt; {
+  <span class="hljs-comment">// a simple reducer that always sets the same value</span>
+  <span class="hljs-comment">// this shows how to respond to multiple actions</span>
+  <span class="hljs-comment">// (fall-through in switch)</span>
+  OPEN_SIDENAV: LayoutReducer&lt;<span class="hljs-built_in">void</span>&gt; =
+    <span class="hljs-keyword">new</span> LayoutReducer&lt;<span class="hljs-built_in">void</span>&gt;([LayoutActionEnum.OPEN_SIDENAV,
+        LayoutActionEnum.OPEN_SIDENAV_ALSO],
+      <span class="hljs-function">(<span class="hljs-params">state: State</span>) =&gt;</span> ({showSidenav: <span class="hljs-literal">true</span>}));
+  <span class="hljs-comment">// a reducer that accepts a value and copies it as a property into state</span>
+  SET_SIDENAV: LayoutReducer&lt;<span class="hljs-built_in">boolean</span>&gt; = <span class="hljs-keyword">new</span> LayoutReducer&lt;<span class="hljs-built_in">boolean</span>&gt;(
+    LayoutActionEnum.SET_SIDENAV,
+    simplePropertyReducer&lt;State, <span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-string">'showSidenav'</span>)
+  );
+
+  <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
+    <span class="hljs-keyword">super</span>(initialState);
+    <span class="hljs-keyword">this</span>.initEnum(<span class="hljs-string">'layoutReducers'</span>);
+  }
+}
+
+<span class="hljs-keyword">const</span> LayoutReducerEnum: LayoutReducerEnumType = <span class="hljs-keyword">new</span> LayoutReducerEnumType();
+</code></pre>
 			<h2 id="more-information">More information</h2>
 			<ul>
-				<li>The <a href="test">test directory</a> contains examples.</li>
 				<li><p>Some users get an error that looks something like this when compiling:</p>
 					<p> <code>ERROR in Error encountered resolving symbol values statically. Calling function &#39;ɵmakeDecorator&#39;, function calls are not supported. Consider replacing the function or lambda with a reference to an exported function, resolving symbol Injectable...</code></p>
 					<p> If you get this error, you might be able to fix the problem by adding a path of <code>&quot;@angular/*&quot;: [&quot;../node_modules/@angular/*&quot;]</code>
