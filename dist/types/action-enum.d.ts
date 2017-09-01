@@ -40,6 +40,11 @@ export declare abstract class ActionEnumValue<T> extends EnumValue {
      *       .catch(handleError);
      */
     of(actions$: Actions): Observable<T | undefined>;
+    /**
+     * For use in reducer. Acts as both a Typescript type guard and a means for
+     * determining which reducer code to execute.
+     */
+    matches(action: TypedAction<any>): action is TypedAction<T>;
     readonly type: string;
     readonly fullName: string;
 }
@@ -47,7 +52,35 @@ export declare abstract class ActionEnumValue<T> extends EnumValue {
  * The abstract base for the action enum types.
  */
 export declare abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<V> {
+    /**
+     * Create an observable of the payload of actions of this type (for creating effects)
+     *
+     * ex:
+     *   @Effect() getHero$ = HeroActionEnum.of(this.actions$, HeroActionEnum.ADD_HERO, HeroActionEnum.SAVE_HERO)
+     *       .switchMap(hero => this.svc.saveHero(hero)) // type-safe
+     *       .map(hero => HeroActionEnum.UPDATE_HERO_SUCCESS.toAction(hero))
+     *       .catch(handleError);
+     */
     static of<T>(actions$: Actions, ...actions: ActionEnumValue<T>[]): Observable<T | undefined>;
+    /**
+     * For use in reducer. Acts as both a Typescript type guard and a means for
+     * determining which reducer code to execute.
+     */
+    static matches<T>(action: TypedAction<T>, ...actions: ActionEnumValue<T>[]): action is TypedAction<T>;
+    /**
+     * Create an observable of the payload of actions of this type (for creating effects)
+     *
+     * ex:
+     *   @Effect() getHero$ = HeroActionEnum.of(this.actions$, HeroActionEnum.ADD_HERO, HeroActionEnum.SAVE_HERO)
+     *       .switchMap(hero => this.svc.saveHero(hero)) // type-safe
+     *       .map(hero => HeroActionEnum.UPDATE_HERO_SUCCESS.toAction(hero))
+     *       .catch(handleError);
+     */
     of<T>(actions$: Actions, ...actions: ActionEnumValue<T>[]): Observable<T | undefined>;
+    /**
+     * For use in reducer. Acts as both a Typescript type guard and a means for
+     * determining which reducer code to execute.
+     */
+    matches<T>(action: TypedAction<T>, ...actions: ActionEnumValue<T>[]): action is TypedAction<T>;
     fromAction(action: TypedAction<any>): V | undefined;
 }
