@@ -1,7 +1,7 @@
 import {Enum, EnumValue} from 'ts-enums';
 import {Action} from '@ngrx/store';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 
 export interface Actions {
   ofType(...allowedTypes: string[]): Observable<TypedAction<any>>;
@@ -71,6 +71,23 @@ export abstract class ActionEnumValue<T> extends EnumValue {
 export abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<
   V
 > {
+  static of<T>(
+    actions$: Actions,
+    ...actions: ActionEnumValue<T>[]
+  ): Observable<T | undefined> {
+    const observable = actions$.ofType(
+      ...actions.map((action: ActionEnumValue<T>) => action.type)
+    );
+    return observable.map((action: TypedAction<T>) => action.payload);
+  }
+
+  of<T>(
+    actions$: Actions,
+    ...actions: ActionEnumValue<T>[]
+  ): Observable<T | undefined> {
+    return ActionEnum.of(actions$, ...actions);
+  }
+
   fromAction(action: TypedAction<any>): V | undefined {
     return this.byDescription(action.type);
   }

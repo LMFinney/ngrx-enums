@@ -930,6 +930,21 @@ var ActionEnum = /** @class */ (function (_super) {
     function ActionEnum() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    ActionEnum.of = function (actions$) {
+        var actions = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            actions[_i - 1] = arguments[_i];
+        }
+        var observable = actions$.ofType.apply(actions$, actions.map(function (action) { return action.type; }));
+        return observable.map(function (action) { return action.payload; });
+    };
+    ActionEnum.prototype.of = function (actions$) {
+        var actions = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            actions[_i - 1] = arguments[_i];
+        }
+        return ActionEnum.of.apply(ActionEnum, [actions$].concat(actions));
+    };
     ActionEnum.prototype.fromAction = function (action) {
         return this.byDescription(action.type);
     };

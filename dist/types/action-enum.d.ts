@@ -47,5 +47,7 @@ export declare abstract class ActionEnumValue<T> extends EnumValue {
  * The abstract base for the action enum types.
  */
 export declare abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<V> {
+    static of<T>(actions$: Actions, ...actions: ActionEnumValue<T>[]): Observable<T | undefined>;
+    of<T>(actions$: Actions, ...actions: ActionEnumValue<T>[]): Observable<T | undefined>;
     fromAction(action: TypedAction<any>): V | undefined;
 }
