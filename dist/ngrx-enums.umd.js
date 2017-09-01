@@ -867,7 +867,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
 /**
  * A version of Action that uses generics to express the type of the payload.
  */
-var TypedAction = /** @class */ (function () {
+var TypedAction = (function () {
     function TypedAction(type, payload) {
         this.type = type;
         this.payload = payload;
@@ -877,7 +877,7 @@ var TypedAction = /** @class */ (function () {
 /**
  * The abstract base for the action enum instances.
  */
-var ActionEnumValue = /** @class */ (function (_super) {
+var ActionEnumValue = (function (_super) {
     __extends(ActionEnumValue, _super);
     function ActionEnumValue(_name) {
         return _super.call(this, _name) || this;
@@ -931,7 +931,7 @@ var ActionEnumValue = /** @class */ (function (_super) {
 /**
  * The abstract base for the action enum types.
  */
-var ActionEnum = /** @class */ (function (_super) {
+var ActionEnum = (function (_super) {
     __extends(ActionEnum, _super);
     function ActionEnum() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -981,7 +981,7 @@ function extractDescriptions(action) {
         return action.fullName;
     }
 }
-var ReducerEnumValue = /** @class */ (function (_super) {
+var ReducerEnumValue = (function (_super) {
     __extends$4(ReducerEnumValue, _super);
     function ReducerEnumValue(action, _reduce) {
         var _this = 
@@ -1002,7 +1002,7 @@ var ReducerEnumValue = /** @class */ (function (_super) {
     });
     return ReducerEnumValue;
 }(EnumValue));
-var ReducerEnum = /** @class */ (function (_super) {
+var ReducerEnum = (function (_super) {
     __extends$4(ReducerEnum, _super);
     function ReducerEnum(initialState) {
         var _this = _super.call(this) || this;
