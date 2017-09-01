@@ -32,7 +32,7 @@ export abstract class ActionEnumValue<T> extends EnumValue {
   /**
    * Get the payload from an action of this type.
    */
-  fromAction(action: TypedAction<T>): T | undefined {
+  toPayload(action: TypedAction<T>): T | undefined {
     return action.payload;
   }
 
@@ -40,7 +40,7 @@ export abstract class ActionEnumValue<T> extends EnumValue {
    * Insert a map to payload operation into an observable chain
    */
   map(observable: Observable<TypedAction<T>>): Observable<T | undefined> {
-    return observable.map(this.fromAction);
+    return observable.map(this.toPayload);
   }
 
   /**
