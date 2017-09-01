@@ -861,7 +861,7 @@ var __extends = (undefined && undefined.__extends) || (function () {
 /**
  * A version of Action that uses generics to express the type of the payload.
  */
-var TypedAction = (function () {
+var TypedAction = /** @class */ (function () {
     function TypedAction(type, payload) {
         this.type = type;
         this.payload = payload;
@@ -871,7 +871,7 @@ var TypedAction = (function () {
 /**
  * The abstract base for the action enum instances.
  */
-var ActionEnumValue = (function (_super) {
+var ActionEnumValue = /** @class */ (function (_super) {
     __extends(ActionEnumValue, _super);
     function ActionEnumValue(_name) {
         return _super.call(this, _name) || this;
@@ -906,6 +906,13 @@ var ActionEnumValue = (function (_super) {
     ActionEnumValue.prototype.of = function (actions$) {
         return this.map(actions$.ofType(this.type));
     };
+    /**
+     * For use in reducer. Acts as both a Typescript type guard and a means for
+     * determining which reducer code to execute.
+     */
+    ActionEnumValue.prototype.matches = function (action) {
+        return action.type === this.type;
+    };
     Object.defineProperty(ActionEnumValue.prototype, "type", {
         get: function () {
             return this.description;
@@ -925,11 +932,20 @@ var ActionEnumValue = (function (_super) {
 /**
  * The abstract base for the action enum types.
  */
-var ActionEnum = (function (_super) {
+var ActionEnum = /** @class */ (function (_super) {
     __extends(ActionEnum, _super);
     function ActionEnum() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * Create an observable of the payload of actions of this type (for creating effects)
+     *
+     * ex:
+     *   @Effect() getHero$ = HeroActionEnum.of(this.actions$, HeroActionEnum.ADD_HERO, HeroActionEnum.SAVE_HERO)
+     *       .switchMap(hero => this.svc.saveHero(hero)) // type-safe
+     *       .map(hero => HeroActionEnum.UPDATE_HERO_SUCCESS.toAction(hero))
+     *       .catch(handleError);
+     */
     ActionEnum.of = function (actions$) {
         var actions = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -938,12 +954,43 @@ var ActionEnum = (function (_super) {
         var observable = actions$.ofType.apply(actions$, actions.map(function (action) { return action.type; }));
         return observable.map(function (action) { return action.payload; });
     };
+    /**
+     * For use in reducer. Acts as both a Typescript type guard and a means for
+     * determining which reducer code to execute.
+     */
+    ActionEnum.matches = function (action) {
+        var actions = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            actions[_i - 1] = arguments[_i];
+        }
+        return !!actions.find(function (actionEVal) { return action.type === actionEVal.type; });
+    };
+    /**
+     * Create an observable of the payload of actions of this type (for creating effects)
+     *
+     * ex:
+     *   @Effect() getHero$ = HeroActionEnum.of(this.actions$, HeroActionEnum.ADD_HERO, HeroActionEnum.SAVE_HERO)
+     *       .switchMap(hero => this.svc.saveHero(hero)) // type-safe
+     *       .map(hero => HeroActionEnum.UPDATE_HERO_SUCCESS.toAction(hero))
+     *       .catch(handleError);
+     */
     ActionEnum.prototype.of = function (actions$) {
         var actions = [];
         for (var _i = 1; _i < arguments.length; _i++) {
             actions[_i - 1] = arguments[_i];
         }
         return ActionEnum.of.apply(ActionEnum, [actions$].concat(actions));
+    };
+    /**
+     * For use in reducer. Acts as both a Typescript type guard and a means for
+     * determining which reducer code to execute.
+     */
+    ActionEnum.prototype.matches = function (action) {
+        var actions = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            actions[_i - 1] = arguments[_i];
+        }
+        return ActionEnum.matches.apply(ActionEnum, [action].concat(actions));
     };
     ActionEnum.prototype.fromAction = function (action) {
         return this.byDescription(action.type);
@@ -975,7 +1022,7 @@ function extractDescriptions(action) {
         return action.fullName;
     }
 }
-var ReducerEnumValue = (function (_super) {
+var ReducerEnumValue = /** @class */ (function (_super) {
     __extends$4(ReducerEnumValue, _super);
     function ReducerEnumValue(action, _reduce) {
         var _this = 
@@ -996,7 +1043,7 @@ var ReducerEnumValue = (function (_super) {
     });
     return ReducerEnumValue;
 }(EnumValue));
-var ReducerEnum = (function (_super) {
+var ReducerEnum = /** @class */ (function (_super) {
     __extends$4(ReducerEnum, _super);
     function ReducerEnum(initialState) {
         var _this = _super.call(this) || this;
