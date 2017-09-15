@@ -44,7 +44,7 @@ export declare abstract class ActionEnumValue<T> extends EnumValue {
      * For use in reducer. Acts as both a Typescript type guard and a means for
      * determining which reducer code to execute.
      */
-    matches(action: TypedAction<any>): action is TypedAction<T>;
+    matches(action: TypedAction<any>, ...otherActions: ActionEnumValue<T>[]): action is TypedAction<T>;
     readonly type: string;
     readonly fullName: string;
 }
