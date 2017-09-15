@@ -14,6 +14,15 @@ export class TypedAction<T> implements Action {
   constructor(public type: string, public payload?: T) {}
 }
 
+function matches<T>(
+  action: TypedAction<T>,
+  ...actions: ActionEnumValue<T>[]
+): action is TypedAction<T> {
+  return !!actions.find(
+    (actionEVal: ActionEnumValue<T>) => action.type === actionEVal.type
+  );
+}
+
 /**
  * The abstract base for the action enum instances.
  */
@@ -60,8 +69,11 @@ export abstract class ActionEnumValue<T> extends EnumValue {
    * For use in reducer. Acts as both a Typescript type guard and a means for
    * determining which reducer code to execute.
    */
-  matches(action: TypedAction<any>): action is TypedAction<T> {
-    return action.type === this.type;
+  matches(
+    action: TypedAction<any>,
+    ...otherActions: ActionEnumValue<T>[]
+  ): action is TypedAction<T> {
+    return action.type === this.type || matches(action, ...otherActions);
   }
 
   get type(): string {
@@ -106,9 +118,7 @@ export abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<
     action: TypedAction<T>,
     ...actions: ActionEnumValue<T>[]
   ): action is TypedAction<T> {
-    return !!actions.find(
-      (actionEVal: ActionEnumValue<T>) => action.type === actionEVal.type
-    );
+    return matches(action, ...actions);
   }
 
   /**
@@ -135,7 +145,7 @@ export abstract class ActionEnum<V extends ActionEnumValue<any>> extends Enum<
     action: TypedAction<T>,
     ...actions: ActionEnumValue<T>[]
   ): action is TypedAction<T> {
-    return ActionEnum.matches(action, ...actions);
+    return matches(action, ...actions);
   }
 
   fromAction(action: TypedAction<any>): V | undefined {
