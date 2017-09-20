@@ -37,12 +37,9 @@ class LayoutAction<T> extends ActionEnumValue<T> {
 }
 
 class LayoutActionEnumType extends ActionEnum<LayoutAction<any>> {
-  OPEN_SIDENAV: LayoutAction<void> =
-    new LayoutAction<void>('[Layout] Open Sidenav');
-  OPEN_SIDENAV_ALSO: LayoutAction<void> =
-    new LayoutAction<void>('[Layout] Open Sidenav Also');
-  SET_SIDENAV: LayoutAction<boolean> =
-    new LayoutAction<boolean>('[Layout] Set Sidenav');
+  OPEN_SIDENAV = new LayoutAction<void>('[Layout] Open Sidenav');
+  OPEN_SIDENAV_ALSO = new LayoutAction<void>('[Layout] Open Sidenav Also');
+  SET_SIDENAV = new LayoutAction<boolean>('[Layout] Set Sidenav');
 
   constructor() {
     super();
@@ -106,12 +103,11 @@ class LayoutReducerEnumType extends ReducerEnum<LayoutReducer<any>, State> {
   // a simple reducer that always sets the same value
   // this shows how to respond to multiple actions
   // (fall-through in switch)
-  OPEN_SIDENAV: LayoutReducer<void> =
-    new LayoutReducer<void>([LayoutActionEnum.OPEN_SIDENAV,
-        LayoutActionEnum.OPEN_SIDENAV_ALSO],
+  OPEN_SIDENAV = new LayoutReducer<void>(
+    [LayoutActionEnum.OPEN_SIDENAV, LayoutActionEnum.OPEN_SIDENAV_ALSO],
       (state: State) => ({showSidenav: true}));
   // a reducer that accepts a value and copies it as a property into state
-  SET_SIDENAV: LayoutReducer<boolean> = new LayoutReducer<boolean>(
+  SET_SIDENAV = new LayoutReducer<boolean>(
     LayoutActionEnum.SET_SIDENAV,
     simplePropertyReducer<State, boolean>('showSidenav')
   );
