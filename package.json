@@ -1,6 +1,6 @@
 {
   "name": "ngrx-enums",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A small library that provides the base classes for for implementing @ngrx actions and reducers with ts-enums.",
   "keywords": [
     "typescript",
