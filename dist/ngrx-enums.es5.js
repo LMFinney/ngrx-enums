@@ -185,46 +185,61 @@ var commonjsGlobal = typeof window !== 'undefined' ? window : typeof global !== 
 
 
 
-
+function unwrapExports (x) {
+	return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, 'default') ? x['default'] : x;
+}
 
 function createCommonjsModule(fn, module) {
 	return module = { exports: {} }, fn(module, module.exports), module.exports;
 }
 
+var isFunction_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function isFunction(x) {
     return typeof x === 'function';
 }
-var isFunction_2 = isFunction;
+exports.isFunction = isFunction;
 
+});
 
-var isFunction_1 = {
-	isFunction: isFunction_2
-};
+unwrapExports(isFunction_1);
 
-var isArray_1 = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
+var isArray = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isArray = Array.isArray || (function (x) { return x && typeof x.length === 'number'; });
 
+});
 
-var isArray = {
-	isArray: isArray_1
-};
+unwrapExports(isArray);
+var isArray_1 = isArray.isArray;
 
+var isObject_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 function isObject(x) {
     return x != null && typeof x === 'object';
 }
-var isObject_2 = isObject;
+exports.isObject = isObject;
 
+});
 
-var isObject_1 = {
-	isObject: isObject_2
-};
+unwrapExports(isObject_1);
 
+var errorObject = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // typeof any so that it we don't have to cast when comparing a result to the error object
-var errorObject_1 = { e: {} };
+exports.errorObject = { e: {} };
 
+});
 
-var errorObject = {
-	errorObject: errorObject_1
-};
+unwrapExports(errorObject);
+
+var tryCatch_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 
 var tryCatchTarget;
 function tryCatcher() {
@@ -240,42 +255,58 @@ function tryCatch(fn) {
     tryCatchTarget = fn;
     return tryCatcher;
 }
-var tryCatch_2 = tryCatch;
+exports.tryCatch = tryCatch;
 
 
+});
 
-var tryCatch_1 = {
-	tryCatch: tryCatch_2
-};
+unwrapExports(tryCatch_1);
 
-var __extends$3 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var UnsubscriptionError_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * An error thrown when one or more errors have occurred during the
  * `unsubscribe` of a {@link Subscription}.
  */
-var UnsubscriptionError = (function (_super) {
-    __extends$3(UnsubscriptionError, _super);
+var UnsubscriptionError = /** @class */ (function (_super) {
+    __extends(UnsubscriptionError, _super);
     function UnsubscriptionError(errors) {
-        _super.call(this);
-        this.errors = errors;
-        var err = Error.call(this, errors ?
-            errors.length + " errors occurred during unsubscription:\n  " + errors.map(function (err, i) { return ((i + 1) + ") " + err.toString()); }).join('\n  ') : '');
-        this.name = err.name = 'UnsubscriptionError';
-        this.stack = err.stack;
-        this.message = err.message;
+        var _this = _super.call(this) || this;
+        _this.errors = errors;
+        var err = Error.call(_this, errors ?
+            errors.length + " errors occurred during unsubscription:\n  " + errors.map(function (err, i) { return i + 1 + ") " + err.toString(); }).join('\n  ') : '');
+        _this.name = err.name = 'UnsubscriptionError';
+        _this.stack = err.stack;
+        _this.message = err.message;
+        return _this;
     }
     return UnsubscriptionError;
 }(Error));
-var UnsubscriptionError_2 = UnsubscriptionError;
+exports.UnsubscriptionError = UnsubscriptionError;
+
+});
+
+unwrapExports(UnsubscriptionError_1);
+
+var Subscription_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 
 
-var UnsubscriptionError_1 = {
-	UnsubscriptionError: UnsubscriptionError_2
-};
+
+
+
 
 /**
  * Represents a disposable resource, such as the execution of an Observable. A
@@ -289,7 +320,7 @@ var UnsubscriptionError_1 = {
  *
  * @class Subscription
  */
-var Subscription = (function () {
+var Subscription = /** @class */ (function () {
     /**
      * @param {function(): void} [unsubscribe] A function describing how to
      * perform the disposal of resources when the `unsubscribe` method is called.
@@ -458,28 +489,32 @@ var Subscription = (function () {
     }(new Subscription()));
     return Subscription;
 }());
-var Subscription_2 = Subscription;
+exports.Subscription = Subscription;
 function flattenUnsubscriptionErrors(errors) {
     return errors.reduce(function (errs, err) { return errs.concat((err instanceof UnsubscriptionError_1.UnsubscriptionError) ? err.errors : err); }, []);
 }
 
+});
 
-var Subscription_1 = {
-	Subscription: Subscription_2
-};
+unwrapExports(Subscription_1);
 
-var empty = {
+var Observer = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.empty = {
     closed: true,
     next: function (value) { },
     error: function (err) { throw err; },
     complete: function () { }
 };
 
+});
 
-var Observer = {
-	empty: empty
-};
+unwrapExports(Observer);
 
+var root = createCommonjsModule(function (module, exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // CommonJS / Node have global context exposed as "global" variable.
 // We don't want to include the whole node.d.ts this this compilation unit so we'll just fake
 // the global "global" var for now.
@@ -488,7 +523,7 @@ var __self = typeof self !== 'undefined' && typeof WorkerGlobalScope !== 'undefi
     self instanceof WorkerGlobalScope && self;
 var __global = typeof commonjsGlobal !== 'undefined' && commonjsGlobal;
 var _root = __window || __global || __self;
-var root_1 = _root;
+exports.root = _root;
 // Workaround Closure Compiler restriction: The body of a goog.module cannot use throw.
 // This is needed when used with angular/tsickle which inserts a goog.module statement.
 // Wrap in IIFE
@@ -498,13 +533,13 @@ var root_1 = _root;
     }
 })();
 
+});
 
-var root = {
-	root: root_1
-};
+unwrapExports(root);
 
 var rxSubscriber = createCommonjsModule(function (module, exports) {
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 
 var Symbol = root.root.Symbol;
 exports.rxSubscriber = (typeof Symbol === 'function' && typeof Symbol.for === 'function') ?
@@ -516,11 +551,21 @@ exports.$$rxSubscriber = exports.rxSubscriber;
 
 });
 
-var __extends$2 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+unwrapExports(rxSubscriber);
+
+var Subscriber_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 
 
 
@@ -535,8 +580,8 @@ var __extends$2 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b
  *
  * @class Subscriber<T>
  */
-var Subscriber = (function (_super) {
-    __extends$2(Subscriber, _super);
+var Subscriber = /** @class */ (function (_super) {
+    __extends(Subscriber, _super);
     /**
      * @param {Observer|function(value: T): void} [destinationOrNext] A partially
      * defined Observer or a `next` callback function.
@@ -546,37 +591,37 @@ var Subscriber = (function (_super) {
      * Observer.
      */
     function Subscriber(destinationOrNext, error, complete) {
-        _super.call(this);
-        this.syncErrorValue = null;
-        this.syncErrorThrown = false;
-        this.syncErrorThrowable = false;
-        this.isStopped = false;
+        var _this = _super.call(this) || this;
+        _this.syncErrorValue = null;
+        _this.syncErrorThrown = false;
+        _this.syncErrorThrowable = false;
+        _this.isStopped = false;
         switch (arguments.length) {
             case 0:
-                this.destination = Observer.empty;
+                _this.destination = Observer.empty;
                 break;
             case 1:
                 if (!destinationOrNext) {
-                    this.destination = Observer.empty;
+                    _this.destination = Observer.empty;
                     break;
                 }
                 if (typeof destinationOrNext === 'object') {
                     if (destinationOrNext instanceof Subscriber) {
-                        this.syncErrorThrowable = destinationOrNext.syncErrorThrowable;
-                        this.destination = destinationOrNext;
-                        this.destination.add(this);
+                        _this.destination = destinationOrNext;
+                        _this.destination.add(_this);
                     }
                     else {
-                        this.syncErrorThrowable = true;
-                        this.destination = new SafeSubscriber(this, destinationOrNext);
+                        _this.syncErrorThrowable = true;
+                        _this.destination = new SafeSubscriber(_this, destinationOrNext);
                     }
                     break;
                 }
             default:
-                this.syncErrorThrowable = true;
-                this.destination = new SafeSubscriber(this, destinationOrNext, error, complete);
+                _this.syncErrorThrowable = true;
+                _this.destination = new SafeSubscriber(_this, destinationOrNext, error, complete);
                 break;
         }
+        return _this;
     }
     Subscriber.prototype[rxSubscriber.rxSubscriber] = function () { return this; };
     /**
@@ -663,19 +708,19 @@ var Subscriber = (function (_super) {
     };
     return Subscriber;
 }(Subscription_1.Subscription));
-var Subscriber_2 = Subscriber;
+exports.Subscriber = Subscriber;
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
  * @extends {Ignored}
  */
-var SafeSubscriber = (function (_super) {
-    __extends$2(SafeSubscriber, _super);
+var SafeSubscriber = /** @class */ (function (_super) {
+    __extends(SafeSubscriber, _super);
     function SafeSubscriber(_parentSubscriber, observerOrNext, error, complete) {
-        _super.call(this);
-        this._parentSubscriber = _parentSubscriber;
+        var _this = _super.call(this) || this;
+        _this._parentSubscriber = _parentSubscriber;
         var next;
-        var context = this;
+        var context = _this;
         if (isFunction_1.isFunction(observerOrNext)) {
             next = observerOrNext;
         }
@@ -686,15 +731,16 @@ var SafeSubscriber = (function (_super) {
             if (observerOrNext !== Observer.empty) {
                 context = Object.create(observerOrNext);
                 if (isFunction_1.isFunction(context.unsubscribe)) {
-                    this.add(context.unsubscribe.bind(context));
+                    _this.add(context.unsubscribe.bind(context));
                 }
-                context.unsubscribe = this.unsubscribe.bind(this);
+                context.unsubscribe = _this.unsubscribe.bind(_this);
             }
         }
-        this._context = context;
-        this._next = next;
-        this._error = error;
-        this._complete = complete;
+        _this._context = context;
+        _this._next = next;
+        _this._error = error;
+        _this._complete = complete;
+        return _this;
     }
     SafeSubscriber.prototype.next = function (value) {
         if (!this.isStopped && this._next) {
@@ -780,16 +826,23 @@ var SafeSubscriber = (function (_super) {
     return SafeSubscriber;
 }(Subscriber));
 
+});
 
-var Subscriber_1 = {
-	Subscriber: Subscriber_2
-};
+unwrapExports(Subscriber_1);
 
-var __extends$1 = (commonjsGlobal && commonjsGlobal.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var map_1 = createCommonjsModule(function (module, exports) {
+"use strict";
+var __extends = (commonjsGlobal && commonjsGlobal.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
 
 /**
  * Applies a given `project` function to each value emitted by the source
@@ -832,8 +885,8 @@ function map(project, thisArg) {
         return source.lift(new MapOperator(project, thisArg));
     };
 }
-var map_2 = map;
-var MapOperator = (function () {
+exports.map = map;
+var MapOperator = /** @class */ (function () {
     function MapOperator(project, thisArg) {
         this.project = project;
         this.thisArg = thisArg;
@@ -843,18 +896,20 @@ var MapOperator = (function () {
     };
     return MapOperator;
 }());
+exports.MapOperator = MapOperator;
 /**
  * We need this JSDoc comment for affecting ESDoc.
  * @ignore
  * @extends {Ignored}
  */
-var MapSubscriber = (function (_super) {
-    __extends$1(MapSubscriber, _super);
+var MapSubscriber = /** @class */ (function (_super) {
+    __extends(MapSubscriber, _super);
     function MapSubscriber(destination, project, thisArg) {
-        _super.call(this, destination);
-        this.project = project;
-        this.count = 0;
-        this.thisArg = thisArg || this;
+        var _this = _super.call(this, destination) || this;
+        _this.project = project;
+        _this.count = 0;
+        _this.thisArg = thisArg || _this;
+        return _this;
     }
     // NOTE: This looks unoptimized, but it's actually purposefully NOT
     // using try/catch optimizations.
@@ -871,6 +926,11 @@ var MapSubscriber = (function (_super) {
     };
     return MapSubscriber;
 }(Subscriber_1.Subscriber));
+
+});
+
+unwrapExports(map_1);
+var map_2 = map_1.map;
 
 var __extends = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -1033,7 +1093,7 @@ var ActionEnum = /** @class */ (function (_super) {
     return ActionEnum;
 }(Enum));
 
-var __extends$4 = (undefined && undefined.__extends) || (function () {
+var __extends$1 = (undefined && undefined.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
         function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
@@ -1058,7 +1118,7 @@ function extractDescriptions(action) {
     }
 }
 var ReducerEnumValue = /** @class */ (function (_super) {
-    __extends$4(ReducerEnumValue, _super);
+    __extends$1(ReducerEnumValue, _super);
     function ReducerEnumValue(action, _reduce) {
         var _this = 
         // if there's only one action value, use its fullName. Otherwise, concat
@@ -1079,7 +1139,7 @@ var ReducerEnumValue = /** @class */ (function (_super) {
     return ReducerEnumValue;
 }(EnumValue));
 var ReducerEnum = /** @class */ (function (_super) {
-    __extends$4(ReducerEnum, _super);
+    __extends$1(ReducerEnum, _super);
     function ReducerEnum(initialState) {
         var _this = _super.call(this) || this;
         _this.initialState = initialState;

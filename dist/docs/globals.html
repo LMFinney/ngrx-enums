@@ -943,12 +943,9 @@ img { max-width: 100%; }
 }
 
 <span class="hljs-keyword">class</span> LayoutActionEnumType <span class="hljs-keyword">extends</span> ActionEnum&lt;LayoutAction&lt;<span class="hljs-built_in">any</span>&gt;&gt; {
-  OPEN_SIDENAV: LayoutAction&lt;<span class="hljs-built_in">void</span>&gt; =
-    <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-string">'[Layout] Open Sidenav'</span>);
-  OPEN_SIDENAV_ALSO: LayoutAction&lt;<span class="hljs-built_in">void</span>&gt; =
-    <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-string">'[Layout] Open Sidenav Also'</span>);
-  SET_SIDENAV: LayoutAction&lt;<span class="hljs-built_in">boolean</span>&gt; =
-    <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-string">'[Layout] Set Sidenav'</span>);
+  OPEN_SIDENAV = <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-string">'[Layout] Open Sidenav'</span>);
+  OPEN_SIDENAV_ALSO = <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">void</span>&gt;(<span class="hljs-string">'[Layout] Open Sidenav Also'</span>);
+  SET_SIDENAV = <span class="hljs-keyword">new</span> LayoutAction&lt;<span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-string">'[Layout] Set Sidenav'</span>);
 
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params"></span>) {
     <span class="hljs-keyword">super</span>();
@@ -1008,12 +1005,11 @@ img { max-width: 100%; }
   <span class="hljs-comment">// a simple reducer that always sets the same value</span>
   <span class="hljs-comment">// this shows how to respond to multiple actions</span>
   <span class="hljs-comment">// (fall-through in switch)</span>
-  OPEN_SIDENAV: LayoutReducer&lt;<span class="hljs-built_in">void</span>&gt; =
-    <span class="hljs-keyword">new</span> LayoutReducer&lt;<span class="hljs-built_in">void</span>&gt;([LayoutActionEnum.OPEN_SIDENAV,
-        LayoutActionEnum.OPEN_SIDENAV_ALSO],
+  OPEN_SIDENAV = <span class="hljs-keyword">new</span> LayoutReducer&lt;<span class="hljs-built_in">void</span>&gt;(
+    [LayoutActionEnum.OPEN_SIDENAV, LayoutActionEnum.OPEN_SIDENAV_ALSO],
       <span class="hljs-function">(<span class="hljs-params">state: State</span>) =&gt;</span> ({showSidenav: <span class="hljs-literal">true</span>}));
   <span class="hljs-comment">// a reducer that accepts a value and copies it as a property into state</span>
-  SET_SIDENAV: LayoutReducer&lt;<span class="hljs-built_in">boolean</span>&gt; = <span class="hljs-keyword">new</span> LayoutReducer&lt;<span class="hljs-built_in">boolean</span>&gt;(
+  SET_SIDENAV = <span class="hljs-keyword">new</span> LayoutReducer&lt;<span class="hljs-built_in">boolean</span>&gt;(
     LayoutActionEnum.SET_SIDENAV,
     simplePropertyReducer&lt;State, <span class="hljs-built_in">boolean</span>&gt;(<span class="hljs-string">'showSidenav'</span>)
   );
