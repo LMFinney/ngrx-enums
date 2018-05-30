@@ -1,6 +1,6 @@
+import { ActionReducer } from '@ngrx/store';
 import { Enum, EnumValue } from 'ts-enums';
 import { ActionEnumValue, TypedAction } from './action-enum';
-import { ActionReducer } from '@ngrx/store';
 export declare type ReducerFunction<S, T> = (state: S, action: TypedAction<T>) => S;
 export declare function simplePropertyReducer<S, T>(propName: string): ReducerFunction<S, T>;
 export declare abstract class ReducerEnumValue<S, T> extends EnumValue {

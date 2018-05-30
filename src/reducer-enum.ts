@@ -1,11 +1,13 @@
-import {Enum, EnumValue} from 'ts-enums';
-import {ActionEnumValue, TypedAction} from './action-enum';
-import {isArray} from 'rxjs/util/isArray';
 import {ActionReducer} from '@ngrx/store';
+import {Enum, EnumValue} from 'ts-enums';
+
+import {ActionEnumValue, TypedAction} from './action-enum';
 
 export type ReducerFunction<S, T> = (state: S, action: TypedAction<T>) => S;
 
-export function simplePropertyReducer<S, T>(propName: string): ReducerFunction<S, T> {
+export function simplePropertyReducer<S, T>(
+  propName: string
+): ReducerFunction<S, T> {
   return (state: S, action: TypedAction<T>): S => {
     return Object.assign({}, state, {[propName]: action.payload});
   };
@@ -14,7 +16,7 @@ export function simplePropertyReducer<S, T>(propName: string): ReducerFunction<S
 function extractDescriptions<T>(
   action: ActionEnumValue<T> | ActionEnumValue<T>[]
 ): string {
-  if (isArray(action)) {
+  if (Array.isArray(action)) {
     return action.map((value: ActionEnumValue<T>) => value.fullName).join(';');
   } else {
     return action.fullName;
@@ -32,7 +34,7 @@ export abstract class ReducerEnumValue<S, T> extends EnumValue {
     // the fullName of all the action values.
     super(extractDescriptions(action));
     // accumulate the action types to check against when reducing
-    this.actions = isArray(action) ? action : [action];
+    this.actions = Array.isArray(action) ? action : [action];
   }
 
   get reduce(): ReducerFunction<S, T> {
@@ -40,7 +42,10 @@ export abstract class ReducerEnumValue<S, T> extends EnumValue {
   }
 }
 
-export abstract class ReducerEnum<V extends ReducerEnumValue<S, any>, S> extends Enum<V> {
+export abstract class ReducerEnum<
+  V extends ReducerEnumValue<S, any>,
+  S
+> extends Enum<V> {
   constructor(private initialState: S) {
     super();
   }
@@ -62,7 +67,9 @@ export abstract class ReducerEnum<V extends ReducerEnumValue<S, any>, S> extends
     this.values.forEach((value: V) => {
       value.actions.forEach((action: ActionEnumValue<any>) => {
         if (allActions.has(action)) {
-          const message = `Action ${action.fullName} is used multiple times in ${name} - this is not allowed`;
+          const message = `Action ${
+            action.fullName
+          } is used multiple times in ${name} - this is not allowed`;
           throw new Error(message);
         } else {
           allActions.add(action);

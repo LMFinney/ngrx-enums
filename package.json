@@ -1,6 +1,6 @@
 {
   "name": "ngrx-enums",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A small library that provides the base classes for for implementing @ngrx actions and reducers with ts-enums.",
   "keywords": [
     "typescript",
@@ -76,21 +76,21 @@
     }
   },
   "dependencies": {
-    "@angular/core": "^4.3.0",
-    "@ngrx/store": "^4.0.3",
-    "ts-enums": "^0.0.5",
-    "rxjs": "^5.5.0"
+    "@angular/core": "^6.0.3",
+    "@ngrx/store": "^6.0.1",
+    "ts-enums": "^0.0.6",
+    "rxjs": "^6.2.0"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.0",
-    "@types/node": "^8.0.0",
+    "@types/jest": "^22.2.3",
+    "@types/node": "^10.1.4",
     "colors": "^1.1.2",
     "commitizen": "^2.9.6",
     "coveralls": "^2.13.1",
     "cross-env": "^5.0.1",
     "cz-conventional-changelog": "^2.0.0",
     "husky": "^0.14.0",
-    "jest": "^20.0.4",
+    "jest": "^23.0.1",
     "lint-staged": "^4.0.0",
     "lodash.camelcase": "^4.3.0",
     "prettier": "^1.4.4",
@@ -101,15 +101,16 @@
     "rollup-plugin-commonjs": "^8.0.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
+    "rxjs-compat": "^6.2.0",
     "semantic-release": "^6.3.6",
-    "ts-jest": "^20.0.6",
+    "ts-jest": "^22.4.6",
     "ts-node": "^3.0.6",
     "tsc-watch": "^1.0.5",
     "tslint": "^5.4.3",
     "tslint-config-prettier": "^1.1.0",
     "tslint-config-standard": "^6.0.0",
     "typedoc": "^0.7.1",
-    "typescript": "^2.3.4",
+    "typescript": "^2.7.2",
     "validate-commit-msg": "^2.12.2"
   },
   "false": {}

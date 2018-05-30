@@ -934,7 +934,7 @@ img { max-width: 100%; }
 			<h2 id="example">Example</h2>
 			<p>These examples are included in a <a href="test/reducer.test.ts">test</a>.</p>
 			<h3 id="actions-defined-via-enums">Actions Defined via Enums</h3>
-			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {ActionEnum, ActionEnumValue} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/action-enum'</span>;
+			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {ActionEnum, ActionEnumValue} <span class="hljs-keyword">from</span> <span class="hljs-string">'ngrx-enums'</span>;
 
 <span class="hljs-keyword">class</span> LayoutAction&lt;T&gt; <span class="hljs-keyword">extends</span> ActionEnumValue&lt;T&gt; {
   <span class="hljs-keyword">constructor</span>(<span class="hljs-params">name: <span class="hljs-built_in">string</span></span>) {
@@ -953,11 +953,10 @@ img { max-width: 100%; }
   }
 }
 
-<span class="hljs-keyword">const</span> LayoutActionEnum: LayoutActionEnumType = <span class="hljs-keyword">new</span> LayoutActionEnumType();
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> LayoutActionEnum: LayoutActionEnumType = <span class="hljs-keyword">new</span> LayoutActionEnumType();
 </code></pre>
 			<h3 id="reducer-defined-via-matches-methods">Reducer Defined via <code>matches()</code> Methods</h3>
-			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {TypedAction} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/action-enum'</span>;
-<span class="hljs-keyword">import</span> {simplePropertyReducer} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/reducer-enum'</span>;
+			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {simplePropertyReducer, TypedAction} <span class="hljs-keyword">from</span> <span class="hljs-string">'ngrx-enums'</span>;
 
 <span class="hljs-keyword">interface</span> State {
   showSidenav: <span class="hljs-built_in">boolean</span>;
@@ -983,8 +982,13 @@ img { max-width: 100%; }
 }
 </code></pre>
 			<h3 id="reducer-defined-via-enums">Reducer Defined via Enums</h3>
-			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {ActionEnumValue} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/action-enum'</span>;
-<span class="hljs-keyword">import</span> {ReducerEnum, ReducerEnumValue, ReducerFunction, simplePropertyReducer} <span class="hljs-keyword">from</span> <span class="hljs-string">'../src/reducer-enum'</span>;
+			<pre><code class="lang-typescript"><span class="hljs-keyword">import</span> {
+  ActionEnumValue,
+  ReducerEnum,
+  ReducerEnumValue,
+  ReducerFunction,
+  simplePropertyReducer
+} <span class="hljs-keyword">from</span> <span class="hljs-string">'ngrx-enums'</span>;
 
 <span class="hljs-keyword">interface</span> State {
   showSidenav: <span class="hljs-built_in">boolean</span>;
@@ -1020,7 +1024,7 @@ img { max-width: 100%; }
   }
 }
 
-<span class="hljs-keyword">const</span> LayoutReducerEnum: LayoutReducerEnumType = <span class="hljs-keyword">new</span> LayoutReducerEnumType();
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> LayoutReducerEnum: LayoutReducerEnumType = <span class="hljs-keyword">new</span> LayoutReducerEnumType();
 </code></pre>
 			<h2 id="more-information">More information</h2>
 			<ul>

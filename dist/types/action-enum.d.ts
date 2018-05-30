@@ -1,6 +1,6 @@
-import { Enum, EnumValue } from 'ts-enums';
 import { Action } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { Enum, EnumValue } from 'ts-enums';
 export interface Actions {
     ofType(...allowedTypes: string[]): Observable<TypedAction<any>>;
 }

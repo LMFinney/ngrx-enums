@@ -8,7 +8,7 @@ the state of Angular apps, but some developers have criticized the [example app]
 for containing too much boilerplate (particularly in the action classes) and for having
 large switch statements in the reducers. [ngrx-example-app-enums](https://github.com/LMFinney/ngrx-example-app-enums)
 is a fork of the [example app](https://github.com/ngrx/example-app)
-that uses [ts-enums](https://github.com/LMFinney/ts-enums) to encapsulate the actions and 
+that uses [ts-enums](https://github.com/LMFinney/ts-enums) to encapsulate the actions and
 reducers, thereby reducing boilerplate and hiding the switch statement from view.
 
 This library builds on [ts-enums](https://github.com/LMFinney/ts-enums) to provide
@@ -28,7 +28,7 @@ These examples are included in a [test](test/reducer.test.ts).
 
 ### Actions Defined via Enums
 ```typescript
-import {ActionEnum, ActionEnumValue} from '../src/action-enum';
+import {ActionEnum, ActionEnumValue} from 'ngrx-enums';
 
 class LayoutAction<T> extends ActionEnumValue<T> {
   constructor(name: string) {
@@ -47,13 +47,12 @@ class LayoutActionEnumType extends ActionEnum<LayoutAction<any>> {
   }
 }
 
-const LayoutActionEnum: LayoutActionEnumType = new LayoutActionEnumType();
+export const LayoutActionEnum: LayoutActionEnumType = new LayoutActionEnumType();
 ```
 
 ### Reducer Defined via `matches()` Methods
 ```typescript
-import {TypedAction} from '../src/action-enum';
-import {simplePropertyReducer} from '../src/reducer-enum';
+import {simplePropertyReducer, TypedAction} from 'ngrx-enums';
 
 interface State {
   showSidenav: boolean;
@@ -81,8 +80,13 @@ function layoutReducer(state = initialState, action: TypedAction<any>): State {
 
 ### Reducer Defined via Enums
 ```typescript
-import {ActionEnumValue} from '../src/action-enum';
-import {ReducerEnum, ReducerEnumValue, ReducerFunction, simplePropertyReducer} from '../src/reducer-enum';
+import {
+  ActionEnumValue,
+  ReducerEnum,
+  ReducerEnumValue,
+  ReducerFunction,
+  simplePropertyReducer
+} from 'ngrx-enums';
 
 interface State {
   showSidenav: boolean;
@@ -118,14 +122,14 @@ class LayoutReducerEnumType extends ReducerEnum<LayoutReducer<any>, State> {
   }
 }
 
-const LayoutReducerEnum: LayoutReducerEnumType = new LayoutReducerEnumType();
+export const LayoutReducerEnum: LayoutReducerEnumType = new LayoutReducerEnumType();
 ```
 
 ## More information
 
 * Some users get an error that looks something like this when compiling:
- 
+
    ```ERROR in Error encountered resolving symbol values statically. Calling function 'ɵmakeDecorator', function calls are not supported. Consider replacing the function or lambda with a reference to an exported function, resolving symbol Injectable...```
-   
-   If you get this error, you might be able to fix the problem by adding a path of ```"@angular/*": ["../node_modules/@angular/*"]``` 
+
+   If you get this error, you might be able to fix the problem by adding a path of ```"@angular/*": ["../node_modules/@angular/*"]```
    to your ```tsconfig.app.json``` file ([more information](https://github.com/angular/angular/issues/15767#issuecomment-308476202)).
